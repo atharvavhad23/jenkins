@@ -1,12 +1,12 @@
 pipeline {
     agent any
 
-    stages {
-        stage('Checkout') {
-            steps {
-                git 'https://github.com/atharvavhad23/jenkins.git'
-            }
-        }
+  stage('Checkout') {
+    steps {
+        git branch: 'main', url: 'https://github.com/atharvavhad23/jenkins.git'
+    }
+}
+
 
         stage('Build') {
             steps {
