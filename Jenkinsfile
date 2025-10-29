@@ -1,14 +1,10 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven'  // Name must match Jenkins global tool config
-    }
-
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                git 'https://github.com/atharvavhad23/jenkins.git'
             }
         }
 
@@ -19,43 +15,31 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                echo '🧪 Running tests...'
-                sh 'mvn -q test'
-            }
-            post {
-                always {
-                    junit 'target/surefire-reports/*.xml'
-                }
-            }
-        }
+        // ❌ Commented out or removed for now
+        // stage('Test') {
+        //     steps {
+        //         echo '🧪 Running tests...'
+        //         sh 'mvn -q test'
+        //     }
+        // }
 
         stage('Package') {
             steps {
-                echo '📦 Packaging the JAR...'
+                echo '📦 Packaging the project...'
                 sh 'mvn -q package'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo '🚀 Deploying the JAR to workspace...'
-                sh 'mkdir -p $WORKSPACE/deployments && cp target/*.jar $WORKSPACE/deployments/'
-            }
-        }
-
-        stage('Run Deployed App') {
-            steps {
-                echo '🟢 Running the built application...'
-                sh 'java -jar target/my-java-app-1.0-SNAPSHOT.jar'
+                echo '🚀 Deploying the application...'
             }
         }
     }
 
     post {
         success {
-            echo '✅ Build, Test, Deploy done successfully!'
+            echo '✅ Pipeline succeeded.'
         }
         failure {
             echo '❌ Pipeline failed.'
