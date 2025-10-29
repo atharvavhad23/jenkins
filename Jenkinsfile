@@ -1,12 +1,12 @@
 pipeline {
     agent any
 
-  stage('Checkout') {
-    steps {
-        git branch: 'main', url: 'https://github.com/atharvavhad23/jenkins.git'
-    }
-}
-
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/atharvavhad23/jenkins.git'
+            }
+        }
 
         stage('Build') {
             steps {
@@ -15,7 +15,6 @@ pipeline {
             }
         }
 
-        // ❌ Commented out or removed for now
         // stage('Test') {
         //     steps {
         //         echo '🧪 Running tests...'
