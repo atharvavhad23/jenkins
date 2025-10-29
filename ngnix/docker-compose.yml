@@ -1,0 +1,36 @@
+version: "3.8"
+
+services:
+  backend1:
+    build: ./backend1
+    container_name: backend1
+    networks:
+      - lb-net
+
+  backend2:
+    build: ./backend2
+    container_name: backend2
+    networks:
+      - lb-net
+
+  backend3:
+    build: ./backend3
+    container_name: backend3
+    networks:
+      - lb-net
+
+  load-balancer:
+    build: ./loadbalancer
+    container_name: load-balancer
+    ports:
+      - "9090:80"
+    depends_on:
+      - backend1
+      - backend2
+      - backend3
+    networks:
+      - lb-net
+
+networks:
+  lb-net:
+    driver: bridge
